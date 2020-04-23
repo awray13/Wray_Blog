@@ -109,9 +109,12 @@
                                         @if (User.Identity.IsAuthenticated)
                                         {
                                             <button type="submit" class="btn btn-secondary">Submit Comment</button>
-                                        }else
+                                        }
+                                        else
                                         {
-
+                                            
+                                            <button type="submit" class="btn btn-outline-secondary">@Html.ActionLink("Please login to submit a comment", "Login", "Account", null, new { @style ="color: #444;", id = "loginLink" })</button>
+                                            
                                         }
                                     </div>
                                    

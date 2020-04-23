@@ -14,8 +14,8 @@ namespace Wray_Blog.Controllers
         public ActionResult Index()
         {
 
-            // Get all the BlogPosts that have been marked as published
-            return View(db.BlogPosts.Where(b => b.IsPublished).ToList());
+            // Get all the BlogPosts that have been marked as published to the page that the User will see
+            return View(db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(b => b.Created).ToList());
         }
 
         public ActionResult About()

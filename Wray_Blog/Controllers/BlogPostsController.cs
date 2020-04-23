@@ -24,7 +24,7 @@ namespace Wray_Blog.Controllers
 
         public ActionResult PublishedIndex()
         {
-            return View("Index", db.BlogPosts.Where(foo => foo.IsPublished).ToList());
+            return View("Index", db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(b => b.Created).ToList());
         }
 
         // GET: BlogPosts/Details/5
