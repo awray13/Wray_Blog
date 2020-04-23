@@ -15,7 +15,7 @@ namespace Wray_Blog.Controllers
         {
 
             // Get all the BlogPosts that have been marked as published to the page that the User will see
-            return View(db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(b => b.Created).ToList());
+            return View(db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(foo => foo.Created).ToList());
         }
 
         public ActionResult About()
