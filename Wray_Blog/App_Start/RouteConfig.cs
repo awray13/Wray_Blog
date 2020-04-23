@@ -13,6 +13,12 @@ namespace Wray_Blog
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            routes.MapRoute(
+                name: "NewSlug",
+                url: "Blog/Details/{slug}",
+                defaults: new { });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

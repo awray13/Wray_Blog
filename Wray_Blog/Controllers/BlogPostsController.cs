@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Wray_Blog.Helpers;
 using Wray_Blog.Models;
 
 namespace Wray_Blog.Controllers
@@ -60,8 +61,16 @@ namespace Wray_Blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                // How to instantiate an object of type StringUtilities
+                var slug = StringUtilities.URLFriendly(blogPost.Title);
+
+                // Class is a type, type is a class
+                //var helper = new StringUtilities();
+                //var slug = helper.URLFriendly(blogPost.Title);
+
                 // hard code the date time 
                 blogPost.Created = DateTime.Now;
+
                 db.BlogPosts.Add(blogPost);
                 db.SaveChanges();
                 return RedirectToAction("Index");
