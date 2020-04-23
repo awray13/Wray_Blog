@@ -1332,6 +1332,11 @@ main.posts-listing .post-footer {
   line-height: 1.1em;
 }
 
+.blog-post h4 {
+    color: #444;
+    line-height: 1.1em;
+}
+
 .blog-post h1:hover {
   color: #444;
 }

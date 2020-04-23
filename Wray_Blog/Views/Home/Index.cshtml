@@ -42,7 +42,7 @@
                                     @Html.ActionLink(@post.Title, "Details", "BlogPosts", new { id = post.Id }, new { @class = "h4" })
                                 </header>
 
-                                <p>@post.Body</p>
+                                <p>@Html.Raw(post.Body)</p>
 
                                 <footer class="post-footer d-flex align-items-center">
                                     <a href="#" class="author d-flex align-items-center flex-wrap">
@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="title"><span>Ashton Wray</span></div>
                                     </a>
-                                    <div class="date"><i class="icon-clock"></i> @post.Created.ToString("MMM dd, yyyy")</div>
+                                    <div class="date"><i class="icon-clock"></i>@post.Created.ToString("MMM dd, yyyy")</div>
                                     <div class="comments"><i class="icon-comment"></i>12</div>
                                 </footer>
                             </div>
@@ -77,7 +77,7 @@
                                     @Html.ActionLink(@post.Title, "Details", "BlogPosts", new { id = post.Id }, new { @class = "h4" })
                                 </header>
 
-                                <p>@post.Body</p>
+                                <p>@Html.Raw(post.Body)</p>
 
                                 <footer class="post-footer d-flex align-items-center">
                                     <a href="#" class="author d-flex align-items-center flex-wrap">
@@ -106,13 +106,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</h2><a href="#" class="hero-link">View More</a>
+                <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</h2>
+                @*<a href="#" class="hero-link">View More</a>*@
             </div>
         </div>
     </div>
 </section>
+
 <!-- Latest Posts -->
-<section class="latest-posts">
+@*<section class="latest-posts">
     <div class="container">
         <header>
             <h2>Latest from the blog</h2>
@@ -157,10 +159,10 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- Newsletter Section-->
 <section class="newsletter no-padding-top">
-    <div class="container">
+    @*<div class="container">
         <div class="row">
             <div class="col-md-6">
                 <h2>Subscribe to Newsletter</h2>
@@ -177,10 +179,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 </section>
 <!-- Gallery Section-->
-<section class="gallery no-padding">
+@*<section class="gallery no-padding">
     <div class="row">
         <div class="mix col-lg-3 col-md-3 col-sm-6">
             <div class="item">
@@ -215,4 +217,4 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@

@@ -77,10 +77,19 @@
                             @Html.ActionLink("Blog Post", "Details", "BlogPosts", new { id = 1 }, new { @class = "nav-link" })
                         </li>
 
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>
+                                @Html.ActionLink("Create Post", "Create", "BlogPosts", null, new { @class = "nav-link" })
+                            </li>
+
+                        }
+
+
 
                         @*<li class="nav-item">
-                            @Html.ActionLink("Login", "Login", "Account", new { id = 1 }, new { @class = "nav-link" })
-                        </li>*@
+            @Html.ActionLink("Login", "Login", "Account", new { id = 1 }, new { @class = "nav-link" })
+        </li>*@
                     </ul>
                     @Html.Partial("_LoginPartial")
 

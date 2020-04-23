@@ -10,11 +10,13 @@ using Wray_Blog.Models;
 
 namespace Wray_Blog.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: BlogPosts
+        
         public ActionResult Index()
         {
             return View(db.BlogPosts.ToList());
@@ -26,6 +28,7 @@ namespace Wray_Blog.Controllers
         }
 
         // GET: BlogPosts/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
