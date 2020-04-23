@@ -63,11 +63,23 @@ namespace Wray_Blog.Controllers
             {
                 // How to instantiate an object of type StringUtilities
                 var slug = StringUtilities.URLFriendly(blogPost.Title);
+                if (String.IsNullOrWhiteSpace(slug))
+                {
+                    ModelState.AddModelError("Title", "Invalid title");
+                    return View(blogPost);
+                }
+                if (db.BlogPosts.Any(p => p.Slug ==slug))
+                {
+                    ModelState.AddModelError("Title", "The title must be unique");
+                    return View(blogPost);
+                }
 
                 // Class is a type, type is a class
                 //var helper = new StringUtilities();
                 //var slug = helper.URLFriendly(blogPost.Title);
 
+
+                blogPost.Slug = slug;
                 // hard code the date time 
                 blogPost.Created = DateTime.Now;
 
