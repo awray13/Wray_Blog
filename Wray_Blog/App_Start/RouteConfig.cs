@@ -15,12 +15,15 @@ namespace Wray_Blog
 
 
             routes.MapRoute(
-                name: "NewSlug",
-                url: "Blog/Details/{slug}",
-                defaults: new {
-                    controller = "BlogPosts", action = "Details",
+                name: "Slug",
+                url: "BlogPosts/Details/{slug}",
+                defaults: new
+                {
+                    controller = "BlogPosts",
+                    action = "Details",
                     slug = UrlParameter.Optional 
-                });
+                }
+                );
 
             routes.MapRoute(
                 name: "Default",

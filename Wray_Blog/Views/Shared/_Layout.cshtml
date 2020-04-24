@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -74,7 +72,7 @@
                         </li>
 
                         <li class="nav-item">
-                            @Html.ActionLink("Blog Post", "Details", "BlogPosts", new { id = 1 }, new { @class = "nav-link" })
+                            @Html.ActionLink("Blog Post", "Details", "BlogPosts", new {slug = "testing-create"}, new { @class = "nav-link" })
                         </li>
 
                         @if (User.IsInRole("Admin"))
@@ -84,12 +82,6 @@
                             </li>
 
                         }
-
-
-
-                        @*<li class="nav-item">
-            @Html.ActionLink("Login", "Login", "Account", new { id = 1 }, new { @class = "nav-link" })
-        </li>*@
                     </ul>
                     @Html.Partial("_LoginPartial")
 

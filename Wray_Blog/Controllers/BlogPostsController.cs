@@ -30,13 +30,13 @@ namespace Wray_Blog.Controllers
 
         // GET: BlogPosts/Details/5
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        public ActionResult Details(string Slug)
         {
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(Slug))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPost blogPost = db.BlogPosts.Find(id);
+            BlogPost blogPost = db.BlogPosts.FirstOrDefault(b => b.Slug == Slug);
             if (blogPost == null)
             {
                 return HttpNotFound();
@@ -57,18 +57,18 @@ namespace Wray_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Abstract,Body,MediaUrl,IsPublished")] BlogPost blogPost)
+        public ActionResult Create([Bind(Include = "Title,Abstract,Slug,Body,MediaUrl,IsPublished")] BlogPost blogPost)
         {
             if (ModelState.IsValid)
             {
                 // How to instantiate an object of type StringUtilities
-                var slug = StringUtilities.URLFriendly(blogPost.Title);
-                if (String.IsNullOrWhiteSpace(slug))
+                var Slug = StringUtilities.URLFriendly(blogPost.Title);
+                if (string.IsNullOrWhiteSpace(Slug))
                 {
                     ModelState.AddModelError("Title", "Invalid title");
                     return View(blogPost);
                 }
-                if (db.BlogPosts.Any(p => p.Slug ==slug))
+                if (db.BlogPosts.Any(p => p.Slug == Slug))
                 {
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blogPost);
@@ -79,7 +79,7 @@ namespace Wray_Blog.Controllers
                 //var slug = helper.URLFriendly(blogPost.Title);
 
 
-                blogPost.Slug = slug;
+                blogPost.Slug = Slug;
                 // hard code the date time 
                 blogPost.Created = DateTime.Now;
 
