@@ -16,7 +16,7 @@ namespace Wray_Blog
 
             routes.MapRoute(
                 name: "Slug",
-                url: "BlogPosts/Details/{slug}",
+                url: "Bee/Mo/{slug}",
                 defaults: new
                 {
                     controller = "BlogPosts",

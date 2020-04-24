@@ -32,7 +32,7 @@ namespace Wray_Blog.Controllers
         [AllowAnonymous]
         public ActionResult Details(string Slug)
         {
-            if (string.IsNullOrWhiteSpace(Slug))
+            if (String.IsNullOrWhiteSpace(Slug))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -61,25 +61,31 @@ namespace Wray_Blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                // How to instantiate an object of type StringUtilities
-                var Slug = StringUtilities.URLFriendly(blogPost.Title);
-                if (string.IsNullOrWhiteSpace(Slug))
+                
+                var slug = StringUtilities.URLFriendly(blogPost.Title);
+                // I want to check for a few error conditions and if they exist I will return an error
+                // First: Lets check if the slug is empty for some reason
+                if (string.IsNullOrWhiteSpace(slug))
                 {
-                    ModelState.AddModelError("Title", "Invalid title");
+                    // This is my opportunity to display a custom error using the ValidationMessageFor
+                    // I determine where the error shows by specifying the property in the first set of quotes
+                    ModelState.AddModelError("Title", "Title cannot be empty");
                     return View(blogPost);
                 }
-                if (db.BlogPosts.Any(p => p.Slug == Slug))
+
+                // Second: We have to make sure this slug has not already been used on a previous BlogPost
+                if (db.BlogPosts.Any(p => p.Slug == slug))
                 {
+                    // I can also display custom errors using the ValidationSummary by leaving the first set of quotes empty ""
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blogPost);
                 }
 
                 // Class is a type, type is a class
-                //var helper = new StringUtilities();
-                //var slug = helper.URLFriendly(blogPost.Title);
+                
 
-
-                blogPost.Slug = Slug;
+                // If neither error conditions were detected then it is okay to use the slug variable to populate the BlogPost's Slug
+                blogPost.Slug = slug;
                 // hard code the date time 
                 blogPost.Created = DateTime.Now;
 
@@ -115,6 +121,28 @@ namespace Wray_Blog.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var slug = StringUtilities.URLFriendly(blogPost.Title);
+                if (blogPost.Slug != slug)
+                {
+                    if (string.IsNullOrEmpty(slug))
+                    {
+                        ModelState.AddModelError("Title", "Oops, the Title cannot be empty!");
+                        return View(blogPost);
+
+                    }
+
+                    if (db.BlogPosts.Any(b => b.Slug == slug))
+                    {
+                        ModelState.AddModelError("Title", "The title must be unique");
+                        return View(blogPost);
+
+                    }
+
+                    blogPost.Slug = slug;
+                }
+
+
                 blogPost.Updated = DateTime.Now;
                 db.Entry(blogPost).State = EntityState.Modified;
                 db.SaveChanges();
