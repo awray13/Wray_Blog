@@ -226,12 +226,15 @@
     <Content Include="Images\gallery-4.jpg" />
     <Content Include="Images\hero-bg.jpg" />
     <Content Include="Images\hero.jpg" />
+    <Content Include="Images\indexbg.jpg" />
     <Content Include="Images\logo-white.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\profile.jpg" />
     <Content Include="Images\small-thumbnail-1.jpg" />
     <Content Include="Images\small-thumbnail-2.jpg" />
     <Content Include="Images\small-thumbnail-3.jpg" />
+    <Content Include="Images\temp-post.jpg" />
+    <Content Include="Images\temp-tate.jpg" />
     <Content Include="Images\template-mac.png" />
     <Content Include="Images\user.svg" />
     <Content Include="Content\jquery.fancybox.css" />
