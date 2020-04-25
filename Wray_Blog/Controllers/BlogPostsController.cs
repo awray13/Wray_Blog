@@ -20,13 +20,14 @@ namespace Wray_Blog.Controllers
         
         public ActionResult Index()
         {
-            return View(db.BlogPosts.ToList());
+            return View(db.BlogPosts.OrderByDescending(b => b.Created).ToList());
+            //return View(db.BlogPosts.ToList());
         }
 
-        public ActionResult PublishedIndex()
-        {
-            return View("Index", db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(b => b.Created).ToList());
-        }
+        //public ActionResult PublishedIndex()
+        //{
+        //    return View(db.BlogPosts.OrderByDescending(b => b.Created).ToList());
+        //}
 
         // GET: BlogPosts/Details/5
         [AllowAnonymous]
@@ -46,7 +47,7 @@ namespace Wray_Blog.Controllers
 
         // GET: BlogPosts/Create
         // How do I prevent someone from  getting to this Create View if they are not an Admin
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
