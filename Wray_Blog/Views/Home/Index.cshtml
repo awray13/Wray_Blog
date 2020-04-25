@@ -55,9 +55,6 @@
                                     </a>
                                     <div class="date"><i class="icon-clock"></i>@post.Created.ToString("MMM dd, yyyy")</div>
                                     <div class="comments"><i class="icon-comment"></i>12</div>
-                                    @if (User.IsInRole("Admin")) { 
-                                    <div class="date">@Html.ActionLink("Index", "BlogPosts")</div>
-                                    }
                                 </footer>
                             </div>
                         </div>
@@ -91,10 +88,6 @@
                                     </a>
                                     <div class="date"><i class="icon-clock"></i>@post.Created.ToString("MMM dd, yyyy")</div>
                                     <div class="comments"><i class="icon-comment"></i>12</div>
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <div class="date"><i class="icon-eye">@Html.ActionLink("Index", "BlogPosts") </i></div>
-                                    }
                                 </footer>
                             </div>
                         </div>

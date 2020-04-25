@@ -78,12 +78,8 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li>
-                                @Html.ActionLink("Create Post", "Create", "BlogPosts", null, new { @class = "nav-link" })
+                                @Html.ActionLink("Admin", "Create", "BlogPosts", null, new { @class = "nav-link" })
                             </li>
-                            <li>
-                                @Html.ActionLink("Blog Index", "Index", "BlogPosts", null, new { @class = "nav-link" })
-                            </li>
-
                         }
                     </ul>
                     @Html.Partial("_LoginPartial")

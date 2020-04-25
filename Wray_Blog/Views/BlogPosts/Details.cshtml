@@ -31,7 +31,12 @@
                         <div class="post-body">
                             <p>@Html.Raw(Model.Body)</p>
                         </div>
-                        @*<div class="post-tags"><a href="#" class="tag">#Business</a><a href="#" class="tag">#Tricks</a><a href="#" class="tag">#Financial</a><a href="#" class="tag">#Economy</a></div>*@
+
+                        @if (User.IsInRole("Admin")){
+                            <div class="post-tags">
+                                <a href="@Url.Action("Edit", "BlogPosts", new { Model.Id })" class="tag">Edit Post</a>
+                            </div>
+                        }
                         <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
                             <a href="#" class="prev-post text-left d-flex align-items-center">
                                 <div class="icon prev"><i class="fa fa-angle-left"></i></div>
