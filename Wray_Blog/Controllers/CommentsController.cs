@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -49,18 +50,27 @@ namespace Wray_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,BlogPostId,AuthorId,Created,Updated,UpdateReason,Body")] Comment comment)
+        public ActionResult Create(string commentBody, int blogPostId, string slug)
+            //public ActionResult Create([Bind(Include = "Id,BlogPostId,AuthorId,Created,Updated,UpdateReason,Body")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                db.Comments.Add(comment);
+                var newComment = new Comment
+                {
+                    Body = commentBody,
+                    BlogPostId = blogPostId,
+                    Created = DateTime.Now,
+                    AuthorId = User.Identity.GetUserId()
+                };
+
+                db.Comments.Add(newComment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "BlogPosts", new { slug });
             }
 
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title", comment.BlogPostId);
-            return View(comment);
+            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
+            //ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title", comment.BlogPostId);
+            return View();
         }
 
         // GET: Comments/Edit/5
