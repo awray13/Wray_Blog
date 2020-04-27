@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary"})
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Created)
@@ -55,7 +55,7 @@
         <td>
             @Html.DisplayFor(modelItem => blogPost.Abstract)
         </td>
-        <td>
+        <td class="text-wrap">
             @Html.DisplayFor(modelItem => blogPost.Body)
         </td>
         <td>

@@ -59,6 +59,7 @@
                             <header>
                                 <h3 class="h6">Post Comments<span class="no-of-comments">(@Model.Comments.Count())</span></h3>
                             </header>
+
                             @foreach (var comment in Model.Comments.OrderByDescending(c => c.BlogPost))
                             {
                             <div class="comment">
