@@ -83,12 +83,7 @@ namespace Wray_Blog.Controllers
                     return View(blogPost);
                 }
 
-                if (ImageUploadValidator.IsWebFriendlyImage(image))
-                {
-                    var fileName = Path.GetFileName(image.FileName);
-                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
-                    blogPost.MediaUrl = "~/Uploads" + fileName;
-                }
+                
 
                 // Class is a type, type is a class
                 
@@ -98,6 +93,19 @@ namespace Wray_Blog.Controllers
                 // hard code the date time 
                 blogPost.Created = DateTime.Now;
 
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    //1. I need to isolate just the file name and ignoe the extension
+                    var justFileName = Path.GetFileNameWithoutExtension(image.FileName);
+                    justFileName = StringUtilities.URLFriendly(justFileName);
+                    justFileName = $"{justFileName}-{DateTime.Now.Ticks}";
+
+                    justFileName = $"{justFileName}{Path.GetExtension(image.FileName)}";
+
+                    //var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), justFileName));
+                    blogPost.MediaUrl = "/Uploads/" + justFileName;
+                }
                 db.BlogPosts.Add(blogPost);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -150,16 +158,24 @@ namespace Wray_Blog.Controllers
 
                     blogPost.Slug = slug;
                 }
+                blogPost.Updated = DateTime.Now;
 
                 if (ImageUploadValidator.IsWebFriendlyImage(image))
                 {
-                    var fileName = Path.GetFileName(image.FileName);
-                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
-                    blogPost.MediaUrl = "~/Uploads" + fileName;
+                    //1. I need to isolate just the file name and ignoe the extension
+                    var justFileName = Path.GetFileNameWithoutExtension(image.FileName);
+                    justFileName = StringUtilities.URLFriendly(justFileName);
+                    justFileName = $"{justFileName}-{DateTime.Now.Ticks}";
+
+                    justFileName = $"{justFileName}{Path.GetExtension(image.FileName)}";
+
+                    //var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), justFileName));
+                    blogPost.MediaUrl = "/Uploads/" + justFileName;
                 }
 
 
-                blogPost.Updated = DateTime.Now;
+
                 db.Entry(blogPost).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
