@@ -59,7 +59,7 @@ namespace Wray_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaUrl,IsPublished")] BlogPost blogPost, HttpPostedFileBase image)
+        public ActionResult Create([Bind(Include = "Id,Created,Title,Body,MediaUrl,IsPublished")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
