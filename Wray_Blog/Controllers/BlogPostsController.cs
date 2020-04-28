@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -58,7 +59,7 @@ namespace Wray_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Abstract,Slug,Body,MediaUrl,IsPublished")] BlogPost blogPost)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaUrl,IsPublished")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -80,6 +81,13 @@ namespace Wray_Blog.Controllers
                     // I can also display custom errors using the ValidationSummary by leaving the first set of quotes empty ""
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blogPost);
+                }
+
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blogPost.MediaUrl = "~/Uploads" + fileName;
                 }
 
                 // Class is a type, type is a class
@@ -118,7 +126,7 @@ namespace Wray_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Title,Slug,Abstract,Body,MediaUrl,IsPublished")] BlogPost blogPost)
+        public ActionResult Edit([Bind(Include = "Id,Created,Title,Slug,Abstract,Body,MediaUrl,IsPublished")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -141,6 +149,13 @@ namespace Wray_Blog.Controllers
                     }
 
                     blogPost.Slug = slug;
+                }
+
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blogPost.MediaUrl = "~/Uploads" + fileName;
                 }
 
 

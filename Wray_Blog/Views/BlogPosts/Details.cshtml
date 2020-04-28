@@ -9,7 +9,10 @@
                     
                 <div class="post-single">
                     <div class="post-thumbnail">
-                        <img src="~/Images/temp-tate.jpg" alt="..." class="img-fluid" />
+                        @if (Model.MediaUrl != null)
+                        {
+                            <img src="@Model.MediaUrl" alt="..." class="img-fluid" />
+                        }
                     </div>
                     <div class="post-details">
                         <div class="post-meta d-flex justify-content-between">

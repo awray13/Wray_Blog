@@ -60,7 +60,10 @@
                         </div>
                     </div>
                     <div class="image col-lg-5">
-                        <img src="~/Images/featured-pic-1.jpeg" alt="..." />
+                        @if (post.MediaUrl != null)
+                        {
+                            <img class="img-fluid" src="@post.MediaUrl" alt="...">
+                        }
                     </div>
                 </div>
             }
@@ -68,7 +71,12 @@
             {
                 <!-- Alternating Post-2 -->
                 <div class="row d-flex align-items-stretch">
-                    <div class="image col-lg-5"><img src="~/Images/featured-pic-2.jpeg" alt="..."></div>
+                    <div class="image col-lg-5">
+                        @if (post.MediaUrl != null)
+                        {
+                            <img class="img-fluid" src="@post.MediaUrl" alt="...">
+                        }
+                    </div>
                     <div class="text col-lg-7">
                         <div class="text-inner d-flex align-items-center">
                             <div class="content">
@@ -108,7 +116,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <h2></h2>
+                <h2>Having to put something here for now. Just wanting to see how it looks and if I really want to keep it here.</h2>
                 @*<a href="#" class="hero-link">View More</a>*@
             </div>
         </div>
