@@ -273,6 +273,46 @@ namespace Wray_Blog.Controllers
             return View();
         }
 
+        //Block of code added by Ashton
+        //
+        // GET: /Account/ResendEmailConfirmation
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ResendEmailConfirmation()
+        {
+            return View();
+        }
+
+        // Block of code added by Ashton
+        //
+        //POST: /Account/ResendEmailConfirmation
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResendEmailConfirmation(ForgotPasswordViewModel model)
+        {
+            var user = await UserManager.FindByNameAsync(model.Email);
+            
+            if (user != null)
+            {
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                    new { userId = user.Id, code = code }, protocol:
+                    Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Confirm your account",
+                    "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            }
+            return RedirectToAction("ConfirmationSent");
+        }
+        // Block of code added by Ashton
+        public ActionResult ConfirmationSent()
+        {
+            return View();
+        }
+
+
+
+
         //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
