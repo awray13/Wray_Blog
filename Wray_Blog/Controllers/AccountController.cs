@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -160,8 +162,6 @@ namespace Wray_Blog.Controllers
                     Email = model.Email
                 };
 
-
-
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -171,7 +171,20 @@ namespace Wray_Blog.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+                    var from = $"Ashton's Blog<{WebConfigurationManager.AppSettings["emailfrom"]}>";
+                    var email = new MailMessage(from, model.Email)
+                    {
+                        Subject = "Confirm Your Account",
+                        Body = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>",
+                        IsBodyHtml = true
+                    };
+
+                    var svc = new EmailService();
+                    await svc.SendAsync(email);
+
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -181,6 +194,8 @@ namespace Wray_Blog.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -213,17 +228,32 @@ namespace Wray_Blog.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                //{
-                //    // Don't reveal that the user does not exist or is not confirmed
-                //    return View("ForgotPasswordConfirmation");
-                //}
+                if (user == null)
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return View("ForgotPasswordConfirmation");
+                }
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
+
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+                var from = $"Ashton's Blog<{WebConfigurationManager.AppSettings["emailfrom"]}>";
+                var email = new MailMessage(from, model.Email)
+                {
+                    Subject = "Reset Your Password",
+                    Body = "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>",
+                    IsBodyHtml = true
+                };
+
+                var svc = new EmailService();
+                await svc.SendAsync(email);
+
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -299,8 +329,20 @@ namespace Wray_Blog.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account",
                     new { userId = user.Id, code = code }, protocol:
                     Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Confirm your account",
-                    "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                //await UserManager.SendEmailAsync(user.Id, "Confirm your account","Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                var from = $"Ashton's Blog<{WebConfigurationManager.AppSettings["emailfrom"]}>";
+                var email = new MailMessage(from, model.Email)
+                {
+                    Subject = "Confirm Your Account",
+                    Body = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>",
+                    IsBodyHtml = true
+                };
+
+                var svc = new EmailService();
+                await svc.SendAsync(email);
+
+
             }
             return RedirectToAction("ConfirmationSent");
         }

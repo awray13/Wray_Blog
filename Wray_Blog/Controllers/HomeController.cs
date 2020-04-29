@@ -58,13 +58,15 @@ namespace Wray_Blog.Controllers
                     var svc = new EmailService();
                     await svc.SendAsync(email);
 
-                    return View(new EmailModel());
+                    //return View(new EmailModel());
+                    return RedirectToAction("Index", "Home");
 
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     await Task.FromResult(0);
+                    
                 }
             }
             return View(model);
