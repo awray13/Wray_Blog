@@ -48,7 +48,7 @@ namespace Wray_Blog.Controllers
 
         // GET: BlogPosts/Create
         // How do I prevent someone from  getting to this Create View if they are not an Admin
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
