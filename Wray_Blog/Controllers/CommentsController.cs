@@ -10,7 +10,8 @@ using System.Web.Mvc;
 using Wray_Blog.Models;
 
 namespace Wray_Blog.Controllers
-{
+{ 
+    [Authorize(Roles = "Admin, Moderator")]
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -95,7 +96,7 @@ namespace Wray_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,BlogPostId,AuthorId,Created,Updated,UpdateReason,Body")] Comment comment)
+        public ActionResult Edit([Bind(Include = "Id,BlogPostId,AuthorId,Created,UpdateReason,Body")] Comment comment)
         {
             if (ModelState.IsValid)
             {
