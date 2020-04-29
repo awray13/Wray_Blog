@@ -71,10 +71,13 @@
                         <li class="nav-item">
                             @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link active" })
                         </li>
+                        <li>
+                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                        </li>
 
                         @*<li class="nav-item">
-                                @Html.ActionLink("Blog Post", "Details", "BlogPosts", new {slug = "testing-create"}, new { @class = "nav-link" })
-                            </li>*@
+            @Html.ActionLink("Blog Post", "Details", "BlogPosts", new {slug = "testing-create"}, new { @class = "nav-link" })
+        </li>*@
 
                         @if (User.IsInRole("Admin"))
                         {
