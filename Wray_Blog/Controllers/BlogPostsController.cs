@@ -7,8 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
 using Wray_Blog.Helpers;
 using Wray_Blog.Models;
+
 
 namespace Wray_Blog.Controllers
 {
@@ -21,6 +24,7 @@ namespace Wray_Blog.Controllers
         
         public ActionResult Index()
         {
+
             return View(db.BlogPosts.OrderByDescending(b => b.Created).ToList());
             //return View(db.BlogPosts.ToList());
         }

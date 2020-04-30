@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
 using Wray_Blog.Models;
 
 namespace Wray_Blog.Controllers
@@ -15,11 +17,14 @@ namespace Wray_Blog.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+            
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
 
             // Get all the BlogPosts that have been marked as published to the page that the User will see
-            return View(db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(foo => foo.Created).ToList());
+            return View(db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(foo => foo.Created).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult About()

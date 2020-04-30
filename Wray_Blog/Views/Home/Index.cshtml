@@ -1,5 +1,9 @@
-﻿@using Wray_Blog.Models
-@model IEnumerable<BlogPost>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using Wray_Blog.Models
+@model IPagedList<BlogPost>
+
+
 
 <!-- Hero Section-->
 <section style="background: url(../../Images/indexbg.jpg); background-size: cover; background-position: center center" class="hero">
@@ -39,12 +43,12 @@
                             <div class="content">
                                 <header class="post-header">
                                     <div class="category">
-                                      
+
                                     </div>
                                     @Html.ActionLink(@post.Title, "Details", "BlogPosts", new { slug = post.Slug }, new { @class = "h4" })
                                 </header>
 
-                                <p>@Html.Raw(post.Body)</p>
+                                <p style="text-overflow: ellipsis;">@Html.Raw(post.Body)</p>
 
                                 <footer class="post-footer d-flex align-items-center">
                                     <a href="#" class="author d-flex align-items-center flex-wrap">
@@ -82,7 +86,7 @@
                             <div class="content">
                                 <header class="post-header">
                                     <div class="category">
-                                        
+
                                     </div>
                                     @Html.ActionLink(@post.Title, "Details", "BlogPosts", new { slug = post.Slug }, new { @class = "h4" })
                                 </header>
@@ -105,7 +109,8 @@
 
             counter++;
         }
-
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
     </div>
 </section>
 <!-- Divider Section-->
@@ -125,106 +130,107 @@
 
 <!-- Latest Posts -->
 @*<section class="latest-posts">
-    <div class="container">
-        <header>
-            <h2>Latest from the blog</h2>
-            <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </header>
-        <div class="row">
-            <div class="post col-md-4">
-                <div class="post-thumbnail"><a href="post.html"><img src="~/Images/blog-1.jpg" alt="..." class="img-fluid" /></a></div>
-                <div class="post-details">
-                    <div class="post-meta d-flex justify-content-between">
-                        <div class="date">20 May | 2016</div>
-                        <div class="category"><a href="#">Business</a></div>
-                    </div><a href="post.html">
-                        <h3 class="h4">Ways to remember your important ideas</h3>
-                    </a>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+        <div class="container">
+            <header>
+                <h2>Latest from the blog</h2>
+                <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            </header>
+            <div class="row">
+                <div class="post col-md-4">
+                    <div class="post-thumbnail"><a href="post.html"><img src="~/Images/blog-1.jpg" alt="..." class="img-fluid" /></a></div>
+                    <div class="post-details">
+                        <div class="post-meta d-flex justify-content-between">
+                            <div class="date">20 May | 2016</div>
+                            <div class="category"><a href="#">Business</a></div>
+                        </div><a href="post.html">
+                            <h3 class="h4">Ways to remember your important ideas</h3>
+                        </a>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="post col-md-4">
-                <div class="post-thumbnail"><a href="post.html"><img src="~/Images/blog-2.jpg" alt="..." class="img-fluid"></a></div>
-                <div class="post-details">
-                    <div class="post-meta d-flex justify-content-between">
-                        <div class="date">20 May | 2016</div>
-                        <div class="category"><a href="#">Technology</a></div>
-                    </div><a href="post.html">
-                        <h3 class="h4">Diversity in Engineering: Effect on Questions</h3>
-                    </a>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <div class="post col-md-4">
+                    <div class="post-thumbnail"><a href="post.html"><img src="~/Images/blog-2.jpg" alt="..." class="img-fluid"></a></div>
+                    <div class="post-details">
+                        <div class="post-meta d-flex justify-content-between">
+                            <div class="date">20 May | 2016</div>
+                            <div class="category"><a href="#">Technology</a></div>
+                        </div><a href="post.html">
+                            <h3 class="h4">Diversity in Engineering: Effect on Questions</h3>
+                        </a>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="post col-md-4">
-                <div class="post-thumbnail"><a href="post.html"><img src="~/Images/blog-3.jpg" alt="..." class="img-fluid"></a></div>
-                <div class="post-details">
-                    <div class="post-meta d-flex justify-content-between">
-                        <div class="date">20 May | 2016</div>
-                        <div class="category"><a href="#">Financial</a></div>
-                    </div><a href="post.html">
-                        <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3>
-                    </a>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <div class="post col-md-4">
+                    <div class="post-thumbnail"><a href="post.html"><img src="~/Images/blog-3.jpg" alt="..." class="img-fluid"></a></div>
+                    <div class="post-details">
+                        <div class="post-meta d-flex justify-content-between">
+                            <div class="date">20 May | 2016</div>
+                            <div class="category"><a href="#">Financial</a></div>
+                        </div><a href="post.html">
+                            <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3>
+                        </a>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>*@
+    </section>*@
 <!-- Newsletter Section-->
 <section class="newsletter no-padding-top">
+ 
     @*<div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Subscribe to Newsletter</h2>
-                <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="col-md-8">
-                <div class="form-holder">
-                    <form action="#">
-                        <div class="form-group">
-                            <input type="email" name="email" id="email" placeholder="Type your email address">
-                            <button type="submit" class="submit">Subscribe</button>
-                        </div>
-                    </form>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Subscribe to Newsletter</h2>
+                    <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-holder">
+                        <form action="#">
+                            <div class="form-group">
+                                <input type="email" name="email" id="email" placeholder="Type your email address">
+                                <button type="submit" class="submit">Subscribe</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 </section>
 <!-- Gallery Section-->
 @*<section class="gallery no-padding">
-    <div class="row">
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="~/Images/gallery-1.jpg" data-fancybox="gallery" class="image">
-                    <img src="~/Images/gallery-1.jpg" alt="..." class="img-fluid" />
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
+        <div class="row">
+            <div class="mix col-lg-3 col-md-3 col-sm-6">
+                <div class="item">
+                    <a href="~/Images/gallery-1.jpg" data-fancybox="gallery" class="image">
+                        <img src="~/Images/gallery-1.jpg" alt="..." class="img-fluid" />
+                        <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                    </a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-3 col-sm-6">
+                <div class="item">
+                    <a href="~/Images/gallery-2.jpg" data-fancybox="gallery" class="image">
+                        <img src="~/Images/gallery-2.jpg" alt="..." class="img-fluid" />
+                        <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                    </a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-3 col-sm-6">
+                <div class="item">
+                    <a href="~/Images/gallery-3.jpg" data-fancybox="gallery" class="image">
+                        <img src="~/Images/gallery-3.jpg" alt="..." class="img-fluid" />
+                        <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                    </a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-3 col-sm-6">
+                <div class="item">
+                    <a href="~/Images/gallery-4.jpg" data-fancybox="gallery" class="image">
+                        <img src="~/Images/gallery-4.jpg" alt="..." class="img-fluid" />
+                        <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="~/Images/gallery-2.jpg" data-fancybox="gallery" class="image">
-                    <img src="~/Images/gallery-2.jpg" alt="..." class="img-fluid" />
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
-            </div>
-        </div>
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="~/Images/gallery-3.jpg" data-fancybox="gallery" class="image">
-                    <img src="~/Images/gallery-3.jpg" alt="..." class="img-fluid" />
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
-            </div>
-        </div>
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="~/Images/gallery-4.jpg" data-fancybox="gallery" class="image">
-                    <img src="~/Images/gallery-4.jpg" alt="..." class="img-fluid" />
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>*@
+    </section>*@
