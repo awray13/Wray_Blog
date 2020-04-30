@@ -5,6 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using Owin.Security.Providers.GitHub;
 using Wray_Blog.Models;
 
 namespace Wray_Blog
@@ -58,11 +59,15 @@ namespace Wray_Blog
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGitHubAuthentication(
+                clientId: "38a414caa333953c52e4",
+                clientSecret: "c079989487213599714e23bd01c396d5a85dee0e");
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "846266216183-m8pjm2dmds1s87s5qept1sld44qqi0ib.apps.googleusercontent.com",
+                ClientSecret = "Mo9IHL0YjEQAC4OCoZrF1vUZ"
+            });
         }
     }
 }

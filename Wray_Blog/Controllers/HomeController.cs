@@ -14,6 +14,8 @@ using Wray_Blog.Models;
 
 namespace Wray_Blog.Controllers
 {
+    
+    [RequireHttps]
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
