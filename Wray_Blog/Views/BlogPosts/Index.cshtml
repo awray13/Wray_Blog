@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Wray_Blog.Models.BlogPost>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using Wray_Blog.Models
+@model IPagedList<BlogPost>
 
 @{
     ViewBag.Title = "Index";
@@ -7,69 +10,78 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Created)
+            @Html.DisplayName("Created")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Updated)
+            @Html.DisplayName("Updated")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayName("Title")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Slug)
+            @Html.DisplayName("Slug")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Abstract)
+            @Html.DisplayName("Abstract")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Body)
+            @Html.DisplayName("Body")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MediaUrl)
+            @Html.DisplayName("MediaUrl")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsPublished)
+            @Html.DisplayName("IsPublished")
         </th>
         <th></th>
     </tr>
 
-@foreach (var blogPost in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.Updated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.Slug)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.Abstract)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.Body)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.MediaUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => blogPost.IsPublished)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=blogPost.Id }) |
-            @Html.ActionLink("Details", "Details", new { slug=blogPost.Slug }) |
-            @Html.ActionLink("Delete", "Delete", new { id=blogPost.Id })
-        </td>
-    </tr>
-}
+    @foreach (var blogPost in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.Updated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.Slug)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.Abstract)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.Body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.MediaUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => blogPost.IsPublished)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = blogPost.Id }) |
+                @Html.ActionLink("Details", "Details", new { slug = blogPost.Slug }) |
+                @Html.ActionLink("Delete", "Delete", new { id = blogPost.Id })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="row">
+    <div class="col text-center">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
+    </div>
+</div>
+

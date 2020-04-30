@@ -48,7 +48,7 @@
                                     @Html.ActionLink(@post.Title, "Details", "BlogPosts", new { slug = post.Slug }, new { @class = "h4" })
                                 </header>
 
-                                <p style="text-overflow: ellipsis;">@Html.Raw(post.Body)</p>
+                                <p style="text-overflow: ellipsis;">@Html.Raw(post.Abstract)</p>
 
                                 <footer class="post-footer d-flex align-items-center">
                                     <a href="#" class="author d-flex align-items-center flex-wrap">
@@ -91,7 +91,7 @@
                                     @Html.ActionLink(@post.Title, "Details", "BlogPosts", new { slug = post.Slug }, new { @class = "h4" })
                                 </header>
 
-                                <p>@Html.Raw(post.Body)</p>
+                                <p>@Html.Raw(post.Abstract)</p>
 
                                 <footer class="post-footer d-flex align-items-center">
                                     <a href="#" class="author d-flex align-items-center flex-wrap">
@@ -109,8 +109,12 @@
 
             counter++;
         }
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    <div class="row">
+        <div class="col text-center">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
+        </div>
+    </div>
     </div>
 </section>
 <!-- Divider Section-->

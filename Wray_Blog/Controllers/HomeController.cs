@@ -9,6 +9,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
+using Wray_Blog.Helpers;
 using Wray_Blog.Models;
 
 namespace Wray_Blog.Controllers
@@ -16,15 +17,20 @@ namespace Wray_Blog.Controllers
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private SearchHelper SearchHelper = new SearchHelper();
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string searchStr)
         {
+            ViewBag.Search = searchStr;
+            var blogPosts = SearchHelper.IndexSearch(searchStr);
             
-            int pageSize = 3;
+            int pageSize = 3; // display three blogposts at a time on this page
             int pageNumber = (page ?? 1);
 
+            return View(blogPosts.ToPagedList(pageNumber, pageSize));
+
             // Get all the BlogPosts that have been marked as published to the page that the User will see
-            return View(db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(foo => foo.Created).ToPagedList(pageNumber, pageSize));
+            //return View(db.BlogPosts.Where(foo => foo.IsPublished).OrderByDescending(foo => foo.Created).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult About()
@@ -76,5 +82,6 @@ namespace Wray_Blog.Controllers
             }
             return View(model);
         }
+
     }
 }

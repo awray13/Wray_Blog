@@ -19,13 +19,19 @@ namespace Wray_Blog.Controllers
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private SearchHelper SearchHelper = new SearchHelper();
 
         // GET: BlogPosts
-        
-        public ActionResult Index()
-        {
 
-            return View(db.BlogPosts.OrderByDescending(b => b.Created).ToList());
+        public ActionResult Index(int? page, string searchStr)
+        {
+            ViewBag.Search = searchStr;
+            var blogPosts = SearchHelper.IndexSearch(searchStr);
+
+            int pageSize = 3; // display three blogposts at a time on this page
+            int pageNumber = (page ?? 1);
+
+            return View(db.BlogPosts.OrderByDescending(b => b.Created).ToPagedList(pageNumber, pageSize));
             //return View(db.BlogPosts.ToList());
         }
 
