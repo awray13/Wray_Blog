@@ -404,6 +404,17 @@
     <Content Include="Scripts\tinymce\themes\silver\theme.min.js" />
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <Content Include="Uploads\background2.jpg" />
+    <Content Include="Uploads\background3.jpg" />
+    <Content Include="Uploads\background4.jpg" />
+    <Content Include="Uploads\background5-637236800448336844.jpg" />
+    <Content Include="Uploads\background5-637238018860419712.jpg" />
+    <Content Include="Uploads\download1.jpg" />
+    <Content Include="Uploads\download2-637238020984108826.jpg" />
+    <Content Include="Uploads\download2.jpg" />
+    <Content Include="Uploads\frozen.jpg" />
+    <Content Include="Uploads\princess-mononoke-637236807702411153.jpg" />
+    <Content Include="Uploads\trees.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -450,7 +461,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -469,6 +479,7 @@
     <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
     <Content Include="Private.config" />
+    <None Include="Properties\PublishProfiles\wrayblog - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
