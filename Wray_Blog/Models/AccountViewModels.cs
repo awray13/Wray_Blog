@@ -8,6 +8,21 @@ namespace Wray_Blog.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long and no more than {1} characters long.", MinimumLength = 2)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long and no more than {1} characters long.", MinimumLength = 2)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be no more than {1} characters long.")]
+        [Display(Name = "Display Name")]
+        public string DisplayName { get; set; }
     }
 
     public class ExternalLoginListViewModel

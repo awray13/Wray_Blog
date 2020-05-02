@@ -39,6 +39,7 @@ namespace Wray_Blog.Controllers
         }
 
         // GET: Comments/Create
+        
         public ActionResult Create()
         {
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName");
@@ -51,6 +52,7 @@ namespace Wray_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Create(string commentBody, int blogPostId, string slug)
             //public ActionResult Create([Bind(Include = "Id,BlogPostId,AuthorId,Created,Updated,UpdateReason,Body")] Comment comment)
         {

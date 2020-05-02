@@ -480,6 +480,7 @@
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
     <Content Include="Private.config" />
     <None Include="Properties\PublishProfiles\wrayblog - Web Deploy.pubxml" />
+    <Content Include="Views\Comments\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
